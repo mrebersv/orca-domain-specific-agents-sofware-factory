@@ -15,7 +15,7 @@
           "id": "task-1.1",
           "title": "Python Packaging & Dependencies",
           "spec_file": "specs/phases/phase-01-scaffolding-storage/tasks/task-1.1-packaging-pyproject.md",
-          "status": "pending",
+          "status": "completed",
           "dependencies": [],
           "parallel_group": null,
           "assigned_harness": "claude-code",

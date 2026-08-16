@@ -1,0 +1,4 @@
+[console_scripts]
+forge = agent_forge.cli:main
+mcp-docs-db = mcp_server.__main__:main
+vram-proxy = proxy.vram_arbiter:main
