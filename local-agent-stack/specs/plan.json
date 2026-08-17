@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "project": "local-agent-stack",
   "version": "0.1.0",
-  "active_phase": "phase-05-local-infrastructure-proxy",
+  "active_phase": "phase-06-orca-ade-integration",
   "phases": [
     {
       "id": "phase-01",
@@ -251,14 +251,14 @@
       "id": "phase-05",
       "name": "Local Infrastructure & VRAM Arbiter Proxy",
       "directory": "specs/phases/phase-05-local-infrastructure-proxy",
-      "status": "pending",
+      "status": "completed",
       "gate_check": "pytest tests/phase_05/ -v",
       "tasks": [
         {
           "id": "task-5.1",
           "title": "FastAPI OpenAI-Compatible Reverse Proxy",
           "spec_file": "specs/phases/phase-05-local-infrastructure-proxy/tasks/task-5.1-fastapi-reverse-proxy.md",
-          "status": "pending",
+          "status": "completed",
           "dependencies": [],
           "parallel_group": null,
           "assigned_harness": "claude-code",
@@ -270,7 +270,7 @@
           "id": "task-5.2",
           "title": "Asyncio GPU Semaphore Arbiter & Request Queue",
           "spec_file": "specs/phases/phase-05-local-infrastructure-proxy/tasks/task-5.2-asyncio-gpu-semaphore-arbiter.md",
-          "status": "pending",
+          "status": "completed",
           "dependencies": [
             "task-5.1"
           ],
@@ -286,7 +286,7 @@
       "id": "phase-06",
       "name": "Orca ADE Integration & Workflow Engine",
       "directory": "specs/phases/phase-06-orca-ade-integration",
-      "status": "blocked",
+      "status": "pending",
       "gate_check": "pytest tests/phase_06/ -v",
       "tasks": [
         {
