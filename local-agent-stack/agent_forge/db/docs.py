@@ -41,10 +41,11 @@ CREATE TABLE IF NOT EXISTS examples (
 );
 
 CREATE TABLE IF NOT EXISTS error_codes (
-    code TEXT PRIMARY KEY,
+    code TEXT NOT NULL,
     symbol_id TEXT REFERENCES symbols(symbol_id) ON DELETE CASCADE,
     meaning TEXT NOT NULL,
-    recovery_action TEXT NOT NULL
+    recovery_action TEXT NOT NULL,
+    PRIMARY KEY (code, symbol_id)
 );
 
 -- Native SQLite FTS5 Virtual Table for BM25 search
@@ -304,7 +305,7 @@ async def insert_symbol_bundle(
                 """
                 INSERT INTO error_codes (code, symbol_id, meaning, recovery_action)
                 VALUES (?, ?, ?, ?)
-                ON CONFLICT(code) DO UPDATE SET
+                ON CONFLICT(code, symbol_id) DO UPDATE SET
                     meaning = excluded.meaning,
                     recovery_action = excluded.recovery_action;
                 """,

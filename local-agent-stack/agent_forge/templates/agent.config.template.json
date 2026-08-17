@@ -1,0 +1,15 @@
+{
+  "agent_id": "{{ agent_id }}",
+  "name": "{{ name }}",
+  "description": "{{ description }}",
+  "harness_type": "{{ harness_type }}",
+  "model_name": "{{ model_name }}",
+  "model_endpoint": "{{ model_endpoint }}",
+  "isolation_tier": "subprocess",
+  "max_turns": 6,
+  "timeout_seconds": 60,
+  "permissions": {
+    "allowed_tools": ["search_symbols", "get_symbol_schema", "list_all_symbols"],
+    "require_approval_for_destructive": true
+  }
+}

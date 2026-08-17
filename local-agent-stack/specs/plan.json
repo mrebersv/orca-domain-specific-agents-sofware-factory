@@ -2,13 +2,13 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "project": "local-agent-stack",
   "version": "0.1.0",
-  "active_phase": "phase-01-scaffolding-storage",
+  "active_phase": "phase-05-local-infrastructure-proxy",
   "phases": [
     {
       "id": "phase-01",
       "name": "Scaffolding, Packaging & Storage Foundation",
       "directory": "specs/phases/phase-01-scaffolding-storage",
-      "status": "pending",
+      "status": "completed",
       "gate_check": "pytest tests/phase_01/ -v",
       "tasks": [
         {
@@ -19,37 +19,53 @@
           "dependencies": [],
           "parallel_group": null,
           "assigned_harness": "claude-code",
-          "artifacts": ["pyproject.toml", "requirements.txt"]
+          "artifacts": [
+            "pyproject.toml",
+            "requirements.txt"
+          ]
         },
         {
           "id": "task-1.2",
           "title": "Bootstrap Installation Script",
           "spec_file": "specs/phases/phase-01-scaffolding-storage/tasks/task-1.2-install-script.md",
-          "status": "pending",
-          "dependencies": ["task-1.1"],
+          "status": "completed",
+          "dependencies": [
+            "task-1.1"
+          ],
           "parallel_group": "p1_db_group",
           "assigned_harness": "claude-code",
-          "artifacts": ["install.sh"]
+          "artifacts": [
+            "install.sh"
+          ]
         },
         {
           "id": "task-1.3",
           "title": "registry.db & scratch.db Schemas and Async Drivers",
           "spec_file": "specs/phases/phase-01-scaffolding-storage/tasks/task-1.3-registry-db-schema.md",
-          "status": "pending",
-          "dependencies": ["task-1.1"],
+          "status": "completed",
+          "dependencies": [
+            "task-1.1"
+          ],
           "parallel_group": "p1_db_group",
           "assigned_harness": "claude-code",
-          "artifacts": ["agent_forge/db/registry.py", "agent_forge/db/scratch.py"]
+          "artifacts": [
+            "agent_forge/db/registry.py",
+            "agent_forge/db/scratch.py"
+          ]
         },
         {
           "id": "task-1.4",
           "title": "docs.db Schema, Connection Manager & FTS5 Auto-Sync Triggers",
           "spec_file": "specs/phases/phase-01-scaffolding-storage/tasks/task-1.4-docs-db-fts5-schema.md",
-          "status": "pending",
-          "dependencies": ["task-1.1"],
+          "status": "completed",
+          "dependencies": [
+            "task-1.1"
+          ],
           "parallel_group": "p1_db_group",
           "assigned_harness": "claude-code",
-          "artifacts": ["agent_forge/db/docs.py"]
+          "artifacts": [
+            "agent_forge/db/docs.py"
+          ]
         }
       ]
     },
@@ -57,48 +73,64 @@
       "id": "phase-02",
       "name": "JIT Knowledge MCP Server",
       "directory": "specs/phases/phase-02-mcp-knowledge-server",
-      "status": "blocked",
+      "status": "completed",
       "gate_check": "pytest tests/phase_02/ -v",
       "tasks": [
         {
           "id": "task-2.1",
           "title": "FastMCP Server Core & Read-Only SQLite Connection Pool",
           "spec_file": "specs/phases/phase-02-mcp-knowledge-server/tasks/task-2.1-mcp-server-core.md",
-          "status": "pending",
+          "status": "completed",
           "dependencies": [],
           "parallel_group": null,
           "assigned_harness": "claude-code",
-          "artifacts": ["mcp_server/server.py", "mcp_server/db.py"]
+          "artifacts": [
+            "mcp_server/server.py",
+            "mcp_server/db.py"
+          ]
         },
         {
           "id": "task-2.2",
           "title": "FTS5 Symbol Search & Ranking Tool",
           "spec_file": "specs/phases/phase-02-mcp-knowledge-server/tasks/task-2.2-mcp-search-symbols-tool.md",
-          "status": "pending",
-          "dependencies": ["task-2.1"],
+          "status": "completed",
+          "dependencies": [
+            "task-2.1"
+          ],
           "parallel_group": "p2_tools",
           "assigned_harness": "claude-code",
-          "artifacts": ["mcp_server/tools/search.py"]
+          "artifacts": [
+            "mcp_server/tools/search.py"
+          ]
         },
         {
           "id": "task-2.3",
           "title": "Symbol Schema, Examples & Error Code Retrieval Tools",
           "spec_file": "specs/phases/phase-02-mcp-knowledge-server/tasks/task-2.3-mcp-schema-tools.md",
-          "status": "pending",
-          "dependencies": ["task-2.1"],
+          "status": "completed",
+          "dependencies": [
+            "task-2.1"
+          ],
           "parallel_group": "p2_tools",
           "assigned_harness": "claude-code",
-          "artifacts": ["mcp_server/tools/schema.py"]
+          "artifacts": [
+            "mcp_server/tools/schema.py"
+          ]
         },
         {
           "id": "task-2.4",
           "title": "Stdio Protocol Runner & CLI Invocation Script",
           "spec_file": "specs/phases/phase-02-mcp-knowledge-server/tasks/task-2.4-mcp-stdio-tests.md",
-          "status": "pending",
-          "dependencies": ["task-2.2", "task-2.3"],
+          "status": "completed",
+          "dependencies": [
+            "task-2.2",
+            "task-2.3"
+          ],
           "parallel_group": null,
           "assigned_harness": "claude-code",
-          "artifacts": ["mcp_server/__main__.py"]
+          "artifacts": [
+            "mcp_server/__main__.py"
+          ]
         }
       ]
     },
@@ -106,48 +138,61 @@
       "id": "phase-03",
       "name": "Meta-Agent Ingestion Engine (Agent Forge)",
       "directory": "specs/phases/phase-03-meta-agent-forge",
-      "status": "blocked",
+      "status": "completed",
       "gate_check": "pytest tests/phase_03/ -v",
       "tasks": [
         {
           "id": "task-3.1",
           "title": "Path A Deterministic AST & Docstring Extractor",
           "spec_file": "specs/phases/phase-03-meta-agent-forge/tasks/task-3.1-ast-python-parser.md",
-          "status": "pending",
+          "status": "completed",
           "dependencies": [],
           "parallel_group": "p3_parsers",
           "assigned_harness": "claude-code",
-          "artifacts": ["agent_forge/ast_extractor.py"]
+          "artifacts": [
+            "agent_forge/ast_extractor.py"
+          ]
         },
         {
           "id": "task-3.2",
           "title": "Path B OpenAPI & CLI --help Spec Extractor",
           "spec_file": "specs/phases/phase-03-meta-agent-forge/tasks/task-3.2-spec-openapi-parser.md",
-          "status": "pending",
+          "status": "completed",
           "dependencies": [],
           "parallel_group": "p3_parsers",
           "assigned_harness": "claude-code",
-          "artifacts": ["agent_forge/spec_extractor.py"]
+          "artifacts": [
+            "agent_forge/spec_extractor.py"
+          ]
         },
         {
           "id": "task-3.3",
           "title": "Workspace Scaffolder: tools.py, prompt.md, and agent.config.json Generator",
           "spec_file": "specs/phases/phase-03-meta-agent-forge/tasks/task-3.3-scaffolder-code-generator.md",
-          "status": "pending",
-          "dependencies": ["task-3.1", "task-3.2"],
+          "status": "completed",
+          "dependencies": [
+            "task-3.1",
+            "task-3.2"
+          ],
           "parallel_group": null,
           "assigned_harness": "claude-code",
-          "artifacts": ["agent_forge/scaffolder.py"]
+          "artifacts": [
+            "agent_forge/scaffolder.py"
+          ]
         },
         {
           "id": "task-3.4",
           "title": "Synthetic Dry-Run Verification Harness",
           "spec_file": "specs/phases/phase-03-meta-agent-forge/tasks/task-3.4-synthetic-verifier.md",
-          "status": "pending",
-          "dependencies": ["task-3.3"],
+          "status": "completed",
+          "dependencies": [
+            "task-3.3"
+          ],
           "parallel_group": null,
           "assigned_harness": "claude-code",
-          "artifacts": ["agent_forge/verifier.py"]
+          "artifacts": [
+            "agent_forge/verifier.py"
+          ]
         }
       ]
     },
@@ -155,38 +200,50 @@
       "id": "phase-04",
       "name": "Harness Adapters & Execution Sandboxing",
       "directory": "specs/phases/phase-04-harness-adapters-sandboxing",
-      "status": "blocked",
+      "status": "completed",
       "gate_check": "pytest tests/phase_04/ -v",
       "tasks": [
         {
           "id": "task-4.1",
           "title": "HarnessAdapter Base Abstract Class & Lifecycle Events",
           "spec_file": "specs/phases/phase-04-harness-adapters-sandboxing/tasks/task-4.1-harness-adapter-base.md",
-          "status": "pending",
+          "status": "completed",
           "dependencies": [],
           "parallel_group": null,
           "assigned_harness": "claude-code",
-          "artifacts": ["adapters/base.py"]
+          "artifacts": [
+            "adapters/base.py"
+          ]
         },
         {
           "id": "task-4.2",
           "title": "Pi, Hermes & Generic CLI Harness Adapter Drivers",
           "spec_file": "specs/phases/phase-04-harness-adapters-sandboxing/tasks/task-4.2-pi-hermes-opencode-adapters.md",
-          "status": "pending",
-          "dependencies": ["task-4.1"],
+          "status": "completed",
+          "dependencies": [
+            "task-4.1"
+          ],
           "parallel_group": "p4_adapters",
           "assigned_harness": "claude-code",
-          "artifacts": ["adapters/pi_adapter.py", "adapters/hermes_adapter.py", "adapters/generic_cli_adapter.py"]
+          "artifacts": [
+            "adapters/pi_adapter.py",
+            "adapters/hermes_adapter.py",
+            "adapters/generic_cli_adapter.py"
+          ]
         },
         {
           "id": "task-4.3",
           "title": "Subprocess & Podman Tiered Execution Sandboxes",
           "spec_file": "specs/phases/phase-04-harness-adapters-sandboxing/tasks/task-4.3-subprocess-podman-runners.md",
-          "status": "pending",
-          "dependencies": ["task-4.1"],
+          "status": "completed",
+          "dependencies": [
+            "task-4.1"
+          ],
           "parallel_group": "p4_adapters",
           "assigned_harness": "claude-code",
-          "artifacts": ["adapters/runners.py"]
+          "artifacts": [
+            "adapters/runners.py"
+          ]
         }
       ]
     },
@@ -194,7 +251,7 @@
       "id": "phase-05",
       "name": "Local Infrastructure & VRAM Arbiter Proxy",
       "directory": "specs/phases/phase-05-local-infrastructure-proxy",
-      "status": "blocked",
+      "status": "pending",
       "gate_check": "pytest tests/phase_05/ -v",
       "tasks": [
         {
@@ -205,17 +262,23 @@
           "dependencies": [],
           "parallel_group": null,
           "assigned_harness": "claude-code",
-          "artifacts": ["proxy/server.py"]
+          "artifacts": [
+            "proxy/server.py"
+          ]
         },
         {
           "id": "task-5.2",
           "title": "Asyncio GPU Semaphore Arbiter & Request Queue",
           "spec_file": "specs/phases/phase-05-local-infrastructure-proxy/tasks/task-5.2-asyncio-gpu-semaphore-arbiter.md",
           "status": "pending",
-          "dependencies": ["task-5.1"],
+          "dependencies": [
+            "task-5.1"
+          ],
           "parallel_group": null,
           "assigned_harness": "claude-code",
-          "artifacts": ["proxy/vram_arbiter.py"]
+          "artifacts": [
+            "proxy/vram_arbiter.py"
+          ]
         }
       ]
     },
@@ -234,27 +297,39 @@
           "dependencies": [],
           "parallel_group": null,
           "assigned_harness": "claude-code",
-          "artifacts": ["orca_pack/generator.py", "orca_pack/templates/orca.template.yaml"]
+          "artifacts": [
+            "orca_pack/generator.py",
+            "orca_pack/templates/orca.template.yaml"
+          ]
         },
         {
           "id": "task-6.2",
           "title": "Pre/Post Worktree Lifecycle Hooks & Secret Enclave Injection",
           "spec_file": "specs/phases/phase-06-orca-ade-integration/tasks/task-6.2-worktree-lifecycle-hooks.md",
           "status": "pending",
-          "dependencies": ["task-6.1"],
+          "dependencies": [
+            "task-6.1"
+          ],
           "parallel_group": "p6_hooks",
           "assigned_harness": "claude-code",
-          "artifacts": ["orca_pack/hooks/pre_run.py", "orca_pack/hooks/post_run.py"]
+          "artifacts": [
+            "orca_pack/hooks/pre_run.py",
+            "orca_pack/hooks/post_run.py"
+          ]
         },
         {
           "id": "task-6.3",
           "title": "Programmatic TDD Multi-Agent Workflow Runner",
           "spec_file": "specs/phases/phase-06-orca-ade-integration/tasks/task-6.3-tdd-remediation-loop-script.md",
           "status": "pending",
-          "dependencies": ["task-6.1"],
+          "dependencies": [
+            "task-6.1"
+          ],
           "parallel_group": "p6_hooks",
           "assigned_harness": "claude-code",
-          "artifacts": ["orca_pack/workflows/tdd_workflow.py"]
+          "artifacts": [
+            "orca_pack/workflows/tdd_workflow.py"
+          ]
         }
       ]
     },
@@ -273,17 +348,23 @@
           "dependencies": [],
           "parallel_group": null,
           "assigned_harness": "claude-code",
-          "artifacts": ["agent_forge/cli.py"]
+          "artifacts": [
+            "agent_forge/cli.py"
+          ]
         },
         {
           "id": "task-7.2",
           "title": "Synthetic End-to-End Ingestion, Worktree & TDD Verification Test",
           "spec_file": "specs/phases/phase-07-e2e-verification-packaging/tasks/task-7.2-e2e-synthetic-pipeline-test.md",
           "status": "pending",
-          "dependencies": ["task-7.1"],
+          "dependencies": [
+            "task-7.1"
+          ],
           "parallel_group": null,
           "assigned_harness": "claude-code",
-          "artifacts": ["tests/phase_07/test_e2e_pipeline.py"]
+          "artifacts": [
+            "tests/phase_07/test_e2e_pipeline.py"
+          ]
         }
       ]
     }
