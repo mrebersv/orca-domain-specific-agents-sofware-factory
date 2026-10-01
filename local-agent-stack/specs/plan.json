@@ -337,14 +337,14 @@
       "id": "phase-07",
       "name": "End-to-End Verification & CLI Packaging",
       "directory": "specs/phases/phase-07-e2e-verification-packaging",
-      "status": "blocked",
+      "status": "completed",
       "gate_check": "pytest tests/phase_07/ -v",
       "tasks": [
         {
           "id": "task-7.1",
           "title": "Unified CLI Entrypoint (`forge` CLI commands)",
           "spec_file": "specs/phases/phase-07-e2e-verification-packaging/tasks/task-7.1-cli-entrypoint-verification.md",
-          "status": "pending",
+          "status": "completed",
           "dependencies": [],
           "parallel_group": null,
           "assigned_harness": "claude-code",
@@ -356,7 +356,7 @@
           "id": "task-7.2",
           "title": "Synthetic End-to-End Ingestion, Worktree & TDD Verification Test",
           "spec_file": "specs/phases/phase-07-e2e-verification-packaging/tasks/task-7.2-e2e-synthetic-pipeline-test.md",
-          "status": "pending",
+          "status": "completed",
           "dependencies": [
             "task-7.1"
           ],
