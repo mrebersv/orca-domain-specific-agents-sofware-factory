@@ -179,7 +179,7 @@ class TestPreRunHook:
                 "status": "healthy",
                 "upstream_reachable": True
             })
-            mock_get.return_value.__aenter__.return_value = mock_response
+            mock_get.return_value = mock_response
 
             result = await pre_run.check_proxy_health()
             assert result == 0
@@ -194,7 +194,7 @@ class TestPreRunHook:
                 "status": "degraded",
                 "upstream_reachable": True
             })
-            mock_get.return_value.__aenter__.return_value = mock_response
+            mock_get.return_value = mock_response
 
             result = await pre_run.check_proxy_health()
             assert result == 1
@@ -209,7 +209,7 @@ class TestPreRunHook:
                 "status": "healthy",
                 "upstream_reachable": False
             })
-            mock_get.return_value.__aenter__.return_value = mock_response
+            mock_get.return_value = mock_response
 
             result = await pre_run.check_proxy_health()
             assert result == 1
@@ -240,7 +240,7 @@ class TestPreRunHook:
                 "status": "healthy",
                 "upstream_reachable": True
             })
-            mock_get.return_value.__aenter__.return_value = mock_response
+            mock_get.return_value = mock_response
 
             result = await pre_run.check_proxy_health(
                 proxy_url="http://custom:9000",

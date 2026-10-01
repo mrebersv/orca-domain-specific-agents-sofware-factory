@@ -286,14 +286,14 @@
       "id": "phase-06",
       "name": "Orca ADE Integration & Workflow Engine",
       "directory": "specs/phases/phase-06-orca-ade-integration",
-      "status": "pending",
+      "status": "completed",
       "gate_check": "pytest tests/phase_06/ -v",
       "tasks": [
         {
           "id": "task-6.1",
           "title": "Orca Workspace Manifest Generator (`forge init-orca`)",
           "spec_file": "specs/phases/phase-06-orca-ade-integration/tasks/task-6.1-orca-yaml-generator.md",
-          "status": "pending",
+          "status": "completed",
           "dependencies": [],
           "parallel_group": null,
           "assigned_harness": "claude-code",
@@ -306,7 +306,7 @@
           "id": "task-6.2",
           "title": "Pre/Post Worktree Lifecycle Hooks & Secret Enclave Injection",
           "spec_file": "specs/phases/phase-06-orca-ade-integration/tasks/task-6.2-worktree-lifecycle-hooks.md",
-          "status": "pending",
+          "status": "completed",
           "dependencies": [
             "task-6.1"
           ],
@@ -321,7 +321,7 @@
           "id": "task-6.3",
           "title": "Programmatic TDD Multi-Agent Workflow Runner",
           "spec_file": "specs/phases/phase-06-orca-ade-integration/tasks/task-6.3-tdd-remediation-loop-script.md",
-          "status": "pending",
+          "status": "completed",
           "dependencies": [
             "task-6.1"
           ],
