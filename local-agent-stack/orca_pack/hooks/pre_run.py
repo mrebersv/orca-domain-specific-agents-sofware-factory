@@ -18,41 +18,6 @@ DEFAULT_PROXY_URL = "http://127.0.0.1:8000"
 DEFAULT_TIMEOUT = 2.0
 
 
-def _unwrap_mock(value: Any) -> Any:
-    """Recursively unwrap MagicMock/AsyncMock to get the real value.
-
-    Stops when it finds an object that looks like a response (has status_code as int).
-    """
-    visited = set()
-    while True:
-        # Check if this value looks like a response object (has status_code as int)
-        if hasattr(value, "status_code"):
-            sc = getattr(value, "status_code", None)
-            if isinstance(sc, int):
-                return value
-
-        # Check for mock objects
-        if hasattr(value, "return_value"):
-            # Avoid infinite recursion
-            if id(value) in visited:
-                break
-            visited.add(id(value))
-            # Don't unwrap if return_value is the same type (prevents infinite loop on MagicMock)
-            rv = value.return_value
-            if type(rv) is type(value):
-                break
-            value = rv
-            continue
-        if callable(value) and not isinstance(value, (int, str, float, bool, type)):
-            try:
-                value = value()
-                continue
-            except Exception:
-                break
-        break
-    return value
-
-
 async def check_proxy_health(
     proxy_url: str = DEFAULT_PROXY_URL,
     timeout: float = DEFAULT_TIMEOUT,
@@ -71,37 +36,7 @@ async def check_proxy_health(
 
     try:
         async with httpx.AsyncClient(timeout=timeout) as client:
-            # Make request - handle both real httpx and test mock
-            request_result = client.get(health_url)
-
-            # Handle test mock: client.get returns an object with __aenter__
-            # Real httpx: client.get returns a coroutine
-            import inspect
-
-            if inspect.iscoroutine(request_result):
-                # Real httpx path
-                response = await request_result
-                return await _process_health_response(response)
-
-            # Test mock path: request_result is a MagicMock with __aenter__
-            if hasattr(request_result, "__aenter__"):
-                aenter = request_result.__aenter__
-                # Try to get the response from __aenter__.return_value
-                if hasattr(aenter, "return_value"):
-                    response = _unwrap_mock(aenter.return_value)
-                else:
-                    # Try calling __aenter__
-                    try:
-                        response = aenter()
-                        if inspect.iscoroutine(response):
-                            response = await response
-                        response = _unwrap_mock(response)
-                    except TypeError:
-                        response = _unwrap_mock(request_result)
-                return await _process_health_response(response)
-
-            # Fallback: assume it's already a response
-            response = _unwrap_mock(request_result)
+            response = await client.get(health_url)
             return await _process_health_response(response)
 
     except httpx.ConnectError:
@@ -131,12 +66,7 @@ async def check_proxy_health(
 
 async def _process_health_response(response: Any) -> int:
     """Process health check response and return exit code."""
-    # Get status_code - handle both real Response and mock objects
     status_code = getattr(response, "status_code", None)
-    status_code = _unwrap_mock(status_code)
-
-    if status_code is None and hasattr(response, "status"):
-        status_code = _unwrap_mock(getattr(response, "status", None))
 
     if status_code != 200:
         print(
@@ -145,27 +75,11 @@ async def _process_health_response(response: Any) -> int:
         )
         return 1
 
-    # Get JSON data - handle AsyncMock that returns coroutine
     if hasattr(response, "json"):
-        json_method = response.json
-        if callable(json_method):
-            try:
-                data = json_method()
-                # Handle case where json() returns a coroutine (AsyncMock)
-                import inspect
-                if inspect.iscoroutine(data):
-                    data = await data
-                # Handle case where data itself is a mock with coroutine attributes
-                data = _unwrap_mock(data)
-                if hasattr(data, "get") and callable(data.get):
-                    # data might be an AsyncMock - try to get status
-                    status_val = _unwrap_mock(data.get("status"))
-                    upstream_val = _unwrap_mock(data.get("upstream_reachable"))
-                    data = {"status": status_val, "upstream_reachable": upstream_val}
-            except Exception:
-                data = {}
-        else:
-            data = json_method if isinstance(json_method, dict) else {}
+        try:
+            data = response.json()
+        except Exception:
+            data = {}
     else:
         data = {}
 

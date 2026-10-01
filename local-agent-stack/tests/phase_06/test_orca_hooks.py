@@ -175,7 +175,7 @@ class TestPreRunHook:
         with patch("httpx.AsyncClient.get") as mock_get:
             mock_response = MagicMock()
             mock_response.status_code = 200
-            mock_response.json = AsyncMock(return_value={
+            mock_response.json = MagicMock(return_value={
                 "status": "healthy",
                 "upstream_reachable": True
             })
@@ -190,7 +190,7 @@ class TestPreRunHook:
         with patch("httpx.AsyncClient.get") as mock_get:
             mock_response = MagicMock()
             mock_response.status_code = 200
-            mock_response.json = AsyncMock(return_value={
+            mock_response.json = MagicMock(return_value={
                 "status": "degraded",
                 "upstream_reachable": True
             })
@@ -205,7 +205,7 @@ class TestPreRunHook:
         with patch("httpx.AsyncClient.get") as mock_get:
             mock_response = MagicMock()
             mock_response.status_code = 200
-            mock_response.json = AsyncMock(return_value={
+            mock_response.json = MagicMock(return_value={
                 "status": "healthy",
                 "upstream_reachable": False
             })
@@ -236,7 +236,7 @@ class TestPreRunHook:
         with patch("httpx.AsyncClient.get") as mock_get:
             mock_response = MagicMock()
             mock_response.status_code = 200
-            mock_response.json = AsyncMock(return_value={
+            mock_response.json = MagicMock(return_value={
                 "status": "healthy",
                 "upstream_reachable": True
             })
